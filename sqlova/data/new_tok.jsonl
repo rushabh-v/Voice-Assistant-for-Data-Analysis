@@ -1,0 +1,1 @@
+{"phase": 1, "table_id": "titanic", "question": "what are the name of the peoples with age greater than 18?", "sql": {"sel": 0, "conds": [], "agg": 0}, "question_tok": ["what", "are", "the", "name", "of", "the", "peoples", "with", "age", "greater", "than", "18", "?"], "query":""}

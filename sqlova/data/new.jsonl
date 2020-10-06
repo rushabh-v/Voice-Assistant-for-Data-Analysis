@@ -1,0 +1,1 @@
+{"phase": 1, "table_id": "titanic", "question": "count how many total females are there?", "sql": {"sel": 0, "conds": [], "agg": 0}}

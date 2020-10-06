@@ -1,0 +1,1 @@
+{"query": {"agg": 0, "sel": 3, "conds": [[5, 1, "18"]]}, "table_id": "titanic", "nlu": "what are the name of the peoples with age greater than 18?", "sql": "SELECT (Name) FROM titanic WHERE Age > 18"}
