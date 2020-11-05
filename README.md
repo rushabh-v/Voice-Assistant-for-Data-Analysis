@@ -1,6 +1,6 @@
 # Voice-Assistant-for-Data-Analysis
 Run SQL queries on a Database by speaking questions in Natural Language.
 
-_This porject is still being worked upon and isn't reproducible yet!_
+I have created a [redash](https://redash.io/) integration of this project where you can run queries by giving voice commands in natural language on the redash' web server. It will be released soon.
 
-This project currently depends on [SQLOVA](https://github.com/naver/sqlova) (The algorithm might be changed in future).
+**This project uses [SQLOVA](https://github.com/naver/sqlova) algorithm.**
