@@ -1,1 +1,1 @@
-{"phase": 1, "table_id": "titanic", "question": "how many people are there with age greater than 40?", "sql": {"sel": 0, "conds": [], "agg": 0}, "question_tok": ["how", "many", "people", "are", "there", "with", "age", "greater", "than", "40", "?"], "query": ""}
+{"phase": 1, "table_id": "titanic", "question": "how many people are there with age less than 30?", "sql": {"sel": 0, "conds": [], "agg": 0}, "question_tok": ["how", "many", "people", "are", "there", "with", "age", "less", "than", "30", "?"], "query": ""}

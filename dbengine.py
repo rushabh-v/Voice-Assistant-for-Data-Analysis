@@ -1,7 +1,10 @@
+import sys
+sys.path.append("/home/rushabh/anaconda3/lib/python3.7/site-packages/")
+
 import records
 import re
 from babel.numbers import parse_decimal, NumberFormatError
-from sqlova.wikisql.lib.query import Query
+from dbva.sqlova.wikisql.lib.query import Query
 
 schema_re = re.compile(r'\((.+)\)')
 num_re = re.compile(r'[-+]?\d*\.\d+|\d+')
@@ -47,6 +50,8 @@ class DBEngine:
         where_str = ''
         if where_clause:
             where_str = 'WHERE ' + ' AND '.join(where_clause)
-        query = 'SELECT {} AS result FROM {} {}'.format(select, table_id, where_str)
-        out = self.db.query(query, **where_map)
-        return [o.result for o in out]
+            for key, val in where_map.items():
+                where_str = where_str.replace(":{}".format(key), val)
+
+        return 'SELECT {} AS result FROM {} {}'.format(select, table_id, where_str)
+

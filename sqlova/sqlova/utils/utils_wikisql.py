@@ -10,7 +10,8 @@ from copy import deepcopy
 from matplotlib.pylab import *
 
 import torch
-import torchvision.datasets as dsets
+
+# import torchvision.datasets as dsets
 import torch.nn as nn
 import torch.nn.functional as F
 

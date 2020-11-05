@@ -1,7 +1,7 @@
 import argparse
 import json
 
-import config
+from dbva import config
 
 template = {
     "phase": 1,
@@ -38,7 +38,7 @@ def annotated_json(question, table_id):
 
 def annotate_and_save(question, table_id, split):
 
-    json_file_name = '{}/{}_tok.jsonl'.format(config.DATABASE_PATH, split)
+    json_file_name = './dbva/{}/{}_tok.jsonl'.format(config.DATABASE_PATH, split)
     annotated_data = annotated_json(question, table_id)
     with open(json_file_name, 'w') as fout:
         json.dump(annotated_data, fout)

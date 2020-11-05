@@ -3,55 +3,42 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import os
-import argparse
 import json
 
-import config
-import annotate
-import dbengine
+from dbva import config
+from dbva.annotate import annotate_and_save
+from dbva.dbengine import DBEngine
 
-import speech_recognition as sr 
-import os 
-from pydub import AudioSegment
-from pydub.silence import split_on_silence
+import os
 
-CEND = '\033[0m'
-CSEL = '\33[7m'
+def convert_to_query(question, split, table_id):
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('split')
-    parser.add_argument('table_id')
-    args = parser.parse_args()
+    if question[-1] != "?":
+        question += "?"
 
-    r = sr.Recognizer()
-    print(CSEL + "Speak up your Question: " + CEND)
-    with sr.Microphone() as source:
-        audio_data = r.record(source, duration=5)
-        question = r.recognize_google(audio_data) + "?"
-        print("\n\n" + "Your Question: " + question)
-
-    annotate.annotate_and_save(question.lower(), args.table_id, args.split)
+    annotate_and_save(question.lower(), table_id, split)
     generate_queries = \
-    "python3 ./sqlova/predict.py --bert_type_abb {} \
-        --model_file {}/model_best.pt \
-        --bert_model_file {}/model_bert_best.pt  \
-        --bert_path {}/ \
-        --result_path ./ \
-        --data_path {}/ \
+    "python3 ./dbva/sqlova/predict.py --bert_type_abb {} \
+        --model_file ./dbva/{}/model_best.pt \
+        --bert_model_file ./dbva/{}/model_bert_best.pt  \
+        --bert_path ./dbva/{}/ \
+        --result_path ./dbva/ \
+        --data_path ./dbva/{}/ \
         --split {} > /dev/null 2>&1".format(config.BERT_TYPE,
                                     config.MODELS_PATH,
                                     config.MODELS_PATH,
                                     config.MODELS_PATH,
                                     config.DATABASE_PATH,
-                                    args.split,
+                                    split,
                                     )
-
+    #
     os.system(generate_queries)
 
-    with open('results_{}.jsonl'.format(args.split), 'r') as result:
+    with open('./dbva/results_{}.jsonl'.format(split), 'r') as result:
         result = json.load(result)
     print("Generated Query:" , result['sql'])
-    db = dbengine.DBEngine("{}/{}.db".format(config.DATABASE_PATH, args.split))
-    table = db.execute_query(args.table_id, result['query'])
-    print(table)
+    db = DBEngine("./dbva/{}/{}.db".format(config.DATABASE_PATH, split))
+    query = db.execute_query(table_id, result['query'])
+    print("Query from sqlova is: ")
+    print(query)
+    return query

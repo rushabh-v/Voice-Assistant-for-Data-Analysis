@@ -1,0 +1,1 @@
+{"query": {"agg": 3, "sel": 6, "conds": [[5, 2, "30"]]}, "table_id": "titanic", "nlu": "how many people are there with age less than 30?", "sql": "SELECT count(SibSp) FROM titanic WHERE Age < 30"}
